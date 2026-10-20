@@ -1,37 +1,49 @@
 # 9. Verification and evaluation plan
 
-## 9.1 Aim being demonstrated
-The platform lets a student find and book a suitable tutor with less effort than the **baseline** (informal search: messenger/social media/word of mouth).
+## Aim and baseline
 
-## 9.2 Baseline
-Informal process measured with the same task and participants: find a tutor for a given subject/budget/time and agree a lesson slot using Instagram/Telegram/Google. Record time, number of contacts, success.
+Evaluate whether TutorGo reduces the effort of finding a suitable tutor and sending a valid booking request. Confirmation and payment correctness are separate technical outcomes. Learning gains are outside the evaluation claim.
 
-## 9.3 Metrics and targets
-| Metric | Definition | Target | Tool |
+Primary comparison: a controlled contact-based directory versus TutorGo using equivalent seeded tutor information, availability and task constraints. In the baseline, participants choose a tutor and compose a booking request to a study moderator; no strangers receive test messages and no real money changes hands. This models part of informal search, not the complete real-world market. Additional interviews reconstruct real recent searches but are analysed separately.
+
+## Participants and procedure
+
+Recruit 5–8 consenting adults, including students/parents unfamiliar with the design. This is a formative study, not a population estimate. Record relevant prior experience without public identifiers. Use two equivalent subject/budget/time tasks, counterbalance platform order, and do not reuse the same answer between conditions. Offer a practice task. Use the same device, network, dataset size and 10-minute task limit. Moderator help makes a task assisted and unsuccessful for the unaided-success metric.
+
+The discovery endpoint is selecting a matching tutor/slot and submitting a valid request. Stop the timer there in both conditions. The tutor response is scripted outside this timer. Evaluate acceptance and sandbox checkout in a separate end-to-end scenario, so human response delay is not mistaken for interface performance.
+
+## Metrics and planned decision rules
+
+| Metric | Definition | Project target | Evidence |
 |---|---|---|---|
-| Task completion time | Seconds from start to confirmed booking | ≤ 50 % of baseline median | stopwatch/logs |
-| Task success rate | % participants who complete find→book unaided | ≥ 90 % | observation |
-| Contacts needed | Tutors contacted before a booking | ≤ 1 (platform) vs baseline | observation |
-| Usability | SUS score (Brooke, 1996) | ≥ 68 | questionnaire |
-| Perceived usefulness/ease | 5-point TAM items (Davis, 1989) | mean ≥ 4.0 | questionnaire |
-| API performance | Search p95 latency | ≤ 500 ms (NFR-01) | k6/autocannon |
-| Correctness under load | Double-bookings / double-payments in 50 parallel requests | 0 | concurrency test |
+| Request-task time | Seconds to valid request, cap 600 seconds; report failures separately | Platform median at most 50% of baseline median | Per-condition logs, medians, individual paired values |
+| Unaided task success | Matching subject, budget and available slot; valid request submitted within limit | At least 90%; for 5–8 participants this requires all to succeed | Counts and denominator, not only rounded percentages |
+| Contacts | Requests to a tutor/moderator before valid agreement | Median no greater than baseline | Observer event log |
+| SUS | Standard 10-item perceived-usability instrument, calculated 0–100 | Mean at least 68 as a project target, not a universal pass/fail law | Questionnaire after tasks; instrument basis L12 in literature review |
+| Search latency P-01 | End-to-end API p95 after warm-up | At most 500 ms | Load-test log with configuration |
+| Booking/payment concurrency P-02 | Duplicate active bookings, confirmations, payouts or charges | Zero duplicates in the defined race scenarios | Database assertions and provider-mock event log |
 
-## 9.4 Measurement conditions
-5–8 participants (students/parents/tutors), same tasks and order, desktop + mobile, seeded dataset of 50 tutors, sandbox payments, think-aloud observation, consent and anonymisation.
+Report number recruited, exclusions and reasons, successes, assisted attempts, failures, per-user times, SUS spread and qualitative issues. Preserve failures and contradictory observations. Do not present a small formative sample as proof of market demand or causal educational effectiveness.
 
-## 9.5 Test plan
-| Level | What | Tools | Maps to |
-|---|---|---|---|
-| Unit | availability calculation, booking status transitions, rating aggregation, ranking | Jest/Vitest | FR-08–12, FR-19 |
-| Integration | API + PostgreSQL: auth, booking conflict (409), payment callback idempotency | Supertest + Testcontainers/Docker | FR-01–11 |
-| E2E | find → book → pay → review | Playwright | FR-07–12 |
-| Security | OWASP Top-10 checklist, RBAC (403), SQLi attempts, no secrets in repo | manual + ZAP/npm audit, gitleaks | NFR-02–04 |
-| Usability | task-based sessions with SUS/TAM | protocol above | NFR-05–06 |
-| Non-functional | latency, concurrency | k6, scripted parallel calls | NFR-01, NFR-07 |
-| Static | lint, type-check in CI | ESLint, tsc | NFR-09 |
+## Technical measurement conditions
 
-Test-case IDs T-01…T-19, S-01…S-03, U-01…U-03, P-01…P-02, C-01, D-01 are defined by the acceptance criteria in [06](06-requirements.md); each case is stored in `tests/` (spec or scenario file) when the feature is implemented.
+P-01: seed 1,000 tutors and 10,000 bookings; document seed, API version, CPU/RAM/OS, database version, local-network conditions and query mix. Warm up for 30 seconds; measure for 5 minutes at 10 requests/second. Report p50/p95/p99, error rate and sample count. Fail the planned check if p95 exceeds 500 ms or errors exceed 1%; do not silently omit slow or failed requests.
 
-## 9.6 Current status
-Frontend `npm run build` / `npm run lint` available. Other test levels start with the backend. `<<fill: date of first run>>`
+P-02: release 50 simultaneous requests for one tutor/slot using a start barrier. Assert at most one active booking, with other requests returning conflict. Repeat with different client idempotency keys, then with one reused key. Send 50 duplicate payment callbacks, plus reordered success/failure events, against an accepted request; verify exactly one paid state and at most one payout record. Race success against cancellation/expiry: a cancelled booking stays cancelled and late payment enters reconciliation. Run these scenarios 20 times and keep every result.
+
+## Test catalogue and traceability
+
+Concrete scenarios and expected results for T-01–T-19, S-01–S-03, U-01–U-03, P-01–P-02, C-01 and D-01 are in [tests/README.md](../tests/README.md). These are planned cases, not executed tests.
+
+| Level | Scope | Planned tooling |
+|---|---|---|
+| Unit | Availability, state guards, review eligibility, idempotency | Vitest/Jest |
+| Integration | API + PostgreSQL constraints, ownership, callbacks | HTTP test client and isolated database |
+| E2E | Search → request → tutor acceptance → sandbox payment → completion → review | Playwright and provider mock |
+| Security | Versioned OWASP ASVS 5.0.0 subset for authentication, validation, ownership and protected files | Automated negative tests plus manual inspection |
+| Performance | Defined latency and race workloads | k6 or equivalent reproducible script |
+| Usability | Controlled comparison and SUS | Consented observation and anonymised records |
+
+## Current results
+
+Only documentation/asset checks for this submission have been performed; see [submission status](12-submission-status.md). No participant study, backend test, latency benchmark or payment integration has run. Frontend build and lint commands exist, but this document does not claim they passed. The complete application is not required for this analysis/design stage.
