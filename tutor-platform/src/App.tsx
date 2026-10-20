@@ -1,16 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Search, Heart, Play, ChevronDown, CheckCircle2, 
+  Search, Play, ChevronDown, CheckCircle2, 
   ArrowRight, Sigma, Globe, BookText, Atom, Star, 
   SearchCheck, CalendarDays, Video 
 } from 'lucide-react';
+import TutorListing from './TutorListing';
+import TutorPages from './TutorPages';
+import TutorSignup from './TutorSignup';
+import SiteHeader, { BrandLogo } from './SiteHeader';
 
 const App: React.FC = () => {
+  const currentPath = window.location.pathname.replace(/\/+$/, '');
+  if (currentPath.startsWith('/booking/')) {
+    return <TutorPages />;
+  }
+  if (currentPath.startsWith('/tutors/')) {
+    return <TutorPages />;
+  }
+  if (currentPath === '/become-tutor') {
+    return <TutorSignup />;
+  }
+  if (currentPath === '/tutors') {
+    return <TutorListing />;
+  }
+
   // Анимация для элементов, появляющихся при скролле
   const fadeUpScroll = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } }
   };
 
   const staggerScroll = {
@@ -21,28 +39,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#fafbfc] font-sans text-gray-900 overflow-x-hidden">
       
-      {/* HEADER */}
-      <header className="bg-white py-4 px-8 flex justify-between items-center shadow-sm sticky top-0 z-50">
-        <div className="flex items-center gap-2 text-2xl font-bold text-blue-600">
-          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <div className="w-4 h-4 bg-white rounded-sm" />
-          </div>
-          TutorGo.kz
-        </div>
-        
-        <nav className="hidden md:flex gap-8 text-gray-600 text-sm font-medium">
-          <a href="#" className="hover:text-blue-600 transition">Найти репетитора</a>
-          <a href="#" className="hover:text-blue-600 transition">Как это работает</a>
-          <a href="#" className="hover:text-blue-600 transition">Стать репетитором</a>
-        </nav>
-
-        <div className="flex items-center gap-6">
-          <Heart className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-500 transition" />
-          <button className="bg-blue-50 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-100 transition">
-            Войти
-          </button>
-        </div>
-      </header>
+      <SiteHeader activePage="home" />
 
       {/* 1. HERO SECTION */}
       <main className="max-w-7xl mx-auto px-8 pt-16 pb-20 flex flex-col md:flex-row items-center justify-between gap-12">
@@ -66,12 +63,12 @@ const App: React.FC = () => {
           </motion.div>
 
           {/* Строка поиска */}
-          <motion.div variants={fadeUpScroll} className="bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 flex flex-col md:flex-row items-center gap-4 border border-gray-100 w-full max-w-2xl">
+          <motion.form action="/tutors" method="get" variants={fadeUpScroll} className="bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 flex flex-col md:flex-row items-center gap-4 border border-gray-100 w-full max-w-2xl">
             <div className="flex-1 flex items-center gap-3 pl-4 w-full border-b md:border-b-0 md:border-r border-gray-100 pb-2 md:pb-0">
               <Search className="w-5 h-5 text-gray-400" />
               <div className="flex flex-col w-full">
                 <span className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Предмет</span>
-                <input type="text" placeholder="Что хотите изучать?" className="outline-none text-sm font-medium w-full text-gray-900 placeholder-gray-800" />
+                <input name="subject" type="text" placeholder="Что хотите изучать?" className="outline-none text-sm font-medium w-full text-gray-900 placeholder-gray-800" />
               </div>
             </div>
             
@@ -83,18 +80,18 @@ const App: React.FC = () => {
               <ChevronDown className="w-4 h-4 text-gray-400" />
             </div>
 
-            <button className="bg-blue-600 text-white px-6 py-3.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition flex items-center gap-2 shadow-md w-full md:w-auto justify-center group">
+            <button type="submit" className="bg-blue-600 text-white px-6 py-3.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition flex items-center gap-2 shadow-md w-full md:w-auto justify-center group">
               Найти репетитора
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
-          </motion.div>
+          </motion.form>
 
           <motion.div variants={fadeUpScroll} className="mt-6 flex flex-wrap gap-4 text-xs font-medium text-gray-400 items-center">
             <span>Популярное:</span>
-            <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition">Математика</span>
-            <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition">Английский</span>
-            <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition">Подготовка к ЕНТ</span>
-            <span className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition">НИШ / БИЛ</span>
+            <a href="/tutors?subject=Математика" className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition">Математика</a>
+            <a href="/tutors?subject=Английский" className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition">Английский</a>
+            <a href="/tutors?subject=Подготовка%20к%20ЕНТ" className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition">Подготовка к ЕНТ</a>
+            <a href="/tutors?subject=НИШ%20%2F%20БИЛ" className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition">НИШ / БИЛ</a>
           </motion.div>
         </motion.div>
 
@@ -120,7 +117,7 @@ const App: React.FC = () => {
       </main>
 
       {/* 2. SUBJECTS SECTION */}
-      <motion.section className="max-w-7xl mx-auto px-8 py-16" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerScroll}>
+      <motion.section id="how-it-works" className="max-w-7xl mx-auto px-8 py-16" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerScroll}>
         <div className="flex justify-between items-end mb-8">
           <motion.h2 variants={fadeUpScroll} className="text-3xl font-extrabold text-gray-900">Что будем изучать?</motion.h2>
           <motion.a variants={fadeUpScroll} href="#" className="text-blue-600 font-medium text-sm flex items-center gap-1 hover:gap-2 transition-all">Все 30+ предметов <ArrowRight className="w-4 h-4" /></motion.a>
@@ -220,22 +217,17 @@ const App: React.FC = () => {
             <p className="text-blue-200 text-sm">Ваш следующий шаг — найти человека, который поможет.</p>
           </div>
           
-          <button className="z-10 bg-blue-600 text-white px-8 py-4 rounded-xl font-medium hover:bg-blue-500 transition flex items-center gap-2 shadow-lg w-full md:w-auto justify-center group whitespace-nowrap">
+          <a href="/tutors" className="z-10 bg-blue-600 text-white px-8 py-4 rounded-xl font-medium hover:bg-blue-500 transition flex items-center gap-2 shadow-lg w-full md:w-auto justify-center group whitespace-nowrap">
             Найти своего репетитора
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </a>
         </motion.div>
       </motion.section>
 
       {/* FOOTER */}
       <footer className="bg-white border-t border-gray-100 py-8 px-8 mt-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xl font-bold text-gray-900">
-            <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-              <div className="w-3 h-3 bg-white rounded-sm" />
-            </div>
-            TutorGo.kz
-          </div>
+          <a href="/" aria-label="TutorGo.kz — главная"><BrandLogo className="text-xl" /></a>
           <p className="text-xs text-gray-400">Учиться — значит расти.</p>
         </div>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 mt-6 text-[10px] text-gray-400 font-medium">
