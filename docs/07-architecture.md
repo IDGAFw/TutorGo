@@ -1,36 +1,58 @@
 # 7. Architecture and diagrams
 
-Editable sources: [ER diagram](../diagrams/TutorGo.drawio), [system context](../diagrams/System_Context_Diagram.drawio), [use cases](../diagrams/Use_Case_Diagram.drawio) and [component diagram](../diagrams/Component_Diagram.drawio). Existing PNG exports: [`diagrams/exports/`](../diagrams/exports). The descriptions below are the proposed design; alignment with each existing diagram still needs a team review.
+This is a proposed MVP design, not a description of a deployed backend. Context, use-case and component sources and exports were updated together on 20 October 2026. The existing ER diagram is retained as the initial model; required schema refinements are listed explicitly below.
 
-## 7.1 System context
+## System context
+
 ![System context](../diagrams/exports/System_Context_Diagram.drawio.png)
-The existing diagram shows Student, Tutor and Administrator, plus payment, video and notification providers. It currently describes generating meeting links through a video API. The proposed MVP stores an external lesson link instead; the diagram needs updating after this decision is confirmed.
 
-## 7.2 Use cases
+[Editable draw.io source](../diagrams/System_Context_Diagram.drawio) and [SVG](../diagrams/exports/System_Context_Diagram.drawio.svg). Students/parents discover tutors, request slots, pay in sandbox and review completed lessons. Tutors manage profiles, availability and requests. Administrators verify documents and moderate. A payment adapter handles hosted checkout and callbacks; a notification adapter is optional. An external lesson URL is supplied by the tutor; TutorGo does not create video meetings through an API in the MVP.
+
+## Use cases
+
 ![Use cases](../diagrams/exports/Use_Case_Diagram.drawio.png)
-The existing diagram covers Student, Tutor and Admin scenarios; *Book a Lesson* includes *Pay for Lesson*. Visitor inheritance, an explicit slot-selection use case and a payment-provider actor are not in the current diagram and remain proposed refinements.
 
-## 7.3 Component diagram (draft)
-![Component diagram](../diagrams/exports/Component_Diagram.drawio.png)
-The existing draft shows a SPA, API gateway/router, backend services, PostgreSQL, file storage and payment/video integrations. It lists frontend and API alternatives rather than a final stack. The proposed design is React SPA → NestJS modular monolith (REST + WebSocket/SSE for messages) → PostgreSQL and file storage, with provider adapters for external integrations. This selection still needs to be reflected in the diagram.
+[Editable source](../diagrams/Use_Case_Diagram.drawio) and [SVG](../diagrams/exports/Use_Case_Diagram.drawio.svg). The system boundary separates user roles from TutorGo actions. Request booking includes selecting an available slot. Paying an accepted request is a later action, not an unconditional payment at initial request creation. Reviews require a completed owned booking. Role/ownership authorization applies to each use case, not merely to navigation visibility.
 
-## 7.4 Data model
-ER diagram: [`diagrams/TutorGo.drawio`](../diagrams/TutorGo.drawio), page 1 — 14 tables: `users`, `tutor_profiles`, `tutor_documents`, `tutor_availability`, `tutor_time_off`, `subjects` (hierarchical via `parent_id`), `tutor_subjects`, `favorites`, `bookings`, `payments`, `payouts`, `reviews` (one per booking), `notifications`, `messages`.
+## Component diagram
 
-## 7.5 Consistency matrix (requirements ↔ components ↔ data ↔ scenarios)
-| Requirement | Use case | Component | Tables |
+![Components](../diagrams/exports/Component_Diagram.drawio.png)
+
+[Editable source](../diagrams/Component_Diagram.drawio) and [SVG](../diagrams/exports/Component_Diagram.drawio.svg). Proposed structure: React SPA → NestJS API boundary → modules within one backend process → PostgreSQL/private storage/provider adapters. The modular monolith avoids separate service deployment at this scale. Optional messaging stays participant-scoped; no transport has been implemented. Modules may access storage through repositories; guards and services enforce authorization. Provider callbacks terminate at a verified API endpoint before invoking payment state transitions.
+
+## Data model
+
+[Initial editable ER source](../diagrams/TutorGo.drawio) and [existing export](../diagrams/exports/TutorGo.drawio.png). Fourteen initial entities: users, tutor_profiles, tutor_documents, tutor_availability, tutor_time_off, subjects, tutor_subjects, favorites, bookings, payments, payouts, reviews, notifications and messages.
+
+The initial ER is a design baseline, not an implemented schema. Before backend migration, refine it as follows:
+
+| Entity / boundary | Required refinement | Reason |
+|---|---|---|
+| bookings | Add tutor_accepted_at, expires_at, client_request_key; unique student/request key; snapshot duration and price | Distinguish tutor acceptance from payment confirmation; expire holds and deduplicate requests |
+| bookings | UTC timestamps; half-open tutor/time range; exclusion constraint for active pending/confirmed records | Prevent overlap in transactions while permitting adjacent lessons |
+| payments | Provider event identifier and unique event receipt; amount/currency/booking validation; separate provider transaction uniqueness | Request retries and repeated callbacks are different deduplication boundaries |
+| payouts | Link eligible booking/payment through a unique reference, or introduce an allocation table for aggregated payouts | Initial tutor-only payout relation cannot enforce one payout per booking |
+| tutor_documents | Store object identifier, detected MIME/size, decision reason and review timestamp | Initial file URL alone does not provide safe private access or rejection traceability |
+| users / auth | Revocable refresh-session records and deactivation checks | Stateless access tokens alone do not implement immediate refresh revocation |
+| payment reconciliation | Record late/duplicate/conflicting events and refund state | Never silently revive a cancelled booking after payment |
+
+Pending holds reserve slots until stored expiry. A transaction first releases expired holds, then inserts/reserves the requested interval under the database constraint; a background job performs eventual cleanup as well. Business logic still enforces guards under a row lock/transaction at the moment of mutation. A UI availability response alone cannot guarantee a later slot is free.
+
+## Traceability
+
+| Requirements | Component | Data | Screen / verification |
 |---|---|---|---|
-| FR-01–03 | Register / Log in | Auth & Users | users |
-| FR-04–06 | Manage profile, Upload documents, Verify documents | Tutor Profiles & Verification, Admin | tutor_profiles, tutor_documents, subjects, tutor_subjects |
-| FR-07 | Search tutors | Search & Ranking, Catalog | tutor_profiles, tutor_subjects, tutor_availability |
-| FR-08 | Set availability | Availability & Time-off | tutor_availability, tutor_time_off |
-| FR-09–10 | Book lesson, Select slot, Cancel, Confirm/decline | Booking Service | bookings |
-| FR-11 | Pay for lesson | Payment Service + Provider Adapters | payments |
-| FR-12 | Leave review | Reviews & Rating | reviews |
-| FR-13 | Manage favorites | Tutor Profiles | favorites |
-| FR-14–15 | Messages, notifications | Messaging & Notifications | messages, notifications |
-| FR-16 | View payouts | Payouts | payouts |
-| FR-17 | Moderate | Admin / Moderation | users, reviews |
+| FR-01–03 | Auth and users | users, planned sessions | T-01–03, S-01–02 |
+| FR-04–06 | Profiles and verification | tutor_profiles, tutor_documents, subjects, tutor_subjects | Profile/admin mockups, T-04–06 |
+| FR-07, FR-18 | Catalog and search | profiles, subjects, availability | Search/mobile mockups, T-07, T-18 |
+| FR-08 | Availability | tutor_availability, tutor_time_off, bookings | Profile/tutor mockups, T-08 |
+| FR-09–10 | Booking | bookings and planned lifecycle fields | Profile/tutor mockups, T-09–10, P-02 |
+| FR-11 | Payment adapter and booking orchestration | payments, event receipts, bookings | Checkout mockup, T-11, P-02 |
+| FR-12 | Reviews | reviews, completed bookings | T-12 |
+| FR-13 | Profiles | favorites | T-13 |
+| FR-14–15 | Messaging/events | messages, notifications | T-14–15 |
+| FR-16 | Payout records | payouts and planned allocation reference | Tutor mockup, T-16 |
+| FR-17 | Admin | users, documents, reviews | Admin mockup, T-17 |
+| FR-19 | Optional ranking | Derived catalog features | T-19 |
 
-## 7.6 Key decisions
-See [`docs/adr/`](adr) and [05](05-technology-comparison.md). Booking conflicts are prevented by a database-level constraint/transaction; payment callbacks are idempotent by `provider_txn_id`.
+See [requirements and state table](06-requirements.md), [scenario catalogue](../tests/README.md), [prototype index](../prototype/README.md) and [ADR](adr/0001-technology-stack.md). Matching the design does not imply the application has been built or tested.

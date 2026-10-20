@@ -1,0 +1,6 @@
+{
+  "name": "tutorgo-design-tools",
+  "private": true,
+  "scripts": { "design": "node generate-design-assets.cjs", "check": "node check-documentation.cjs" },
+  "devDependencies": { "@resvg/resvg-js": "2.6.2" }
+}
