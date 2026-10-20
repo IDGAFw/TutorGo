@@ -1,0 +1,104 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="4Y8a3WeRYC7dgOZ-2AQE">
+    <mxGraphModel dx="808" dy="526" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;graph TD\n    %% Styling definitions\n    classDef actor fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724;\n    classDef system fill:#0056b3,stroke:#004085,stroke-width:2px,color:#ffffff;\n    classDef external fill:#e2e3e5,stroke:#383d41,stroke-width:2px,color:#383d41;\n\n    %% Actors\n    Student((Student)):::actor\n    Tutor((Tutor)):::actor\n    Admin((Administrator)):::actor\n\n    %% Main System\n    System[&lt;b&gt;Tutor Booking Platform&lt;/b&gt;&lt;br&gt;Web platform for finding&lt;br&gt;and booking tutors]:::system\n\n    %% External Systems\n    PaymentAPI[Payment Gateway&lt;br&gt;Stripe / PayPal]:::external\n    VideoAPI[Video Conferencing API&lt;br&gt;Zoom / Google Meet]:::external\n    EmailAPI[Notification Service&lt;br&gt;SendGrid / SMTP]:::external\n\n    %% Relationships\n    Student --&gt;|Searches, books lessons,&lt;br&gt;pays, leaves reviews| System\n    Tutor --&gt;|Manages profile &amp; schedule,&lt;br&gt;teaches, receives payouts| System\n    Admin --&gt;|Verifies documents,&lt;br&gt;moderates platform| System\n\n    System --&gt;|Processes payments &amp; refunds| PaymentAPI\n    System --&gt;|Generates online meeting links| VideoAPI\n    System --&gt;|Sends Email/SMS notifications| EmailAPI&quot;,&#xa;  &quot;config&quot;: null,&#xa;  &quot;version&quot;: &quot;12&quot;&#xa;}" id="rhjx_dGbegwnGX5aLIfb-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Student" mermaidId="n:Student" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Student" id="rhjx_dGbegwnGX5aLIfb-2">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="184" width="184" x="30" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Tutor" mermaidId="n:Tutor" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Tutor" id="rhjx_dGbegwnGX5aLIfb-3">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="184" width="184" x="254" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Administrator" mermaidId="n:Admin" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Administrator" id="rhjx_dGbegwnGX5aLIfb-4">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#d4edda;strokeColor=#28a745;fontColor=#155724;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="184" width="184" x="478" y="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Tutor Booking Platform&lt;/b&gt;&#xa;Web platform for finding&#xa;and booking tutors" mermaidId="n:System" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#0056b3;strokeColor=#004085;fontColor=#ffffff;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="&lt;b&gt;Tutor Booking Platform&lt;/b&gt;&#xa;Web platform for finding&#xa;and booking tutors" id="rhjx_dGbegwnGX5aLIfb-5">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#0056b3;strokeColor=#004085;fontColor=#ffffff;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="172" width="152" x="270" y="336" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Payment Gateway&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" mermaidId="n:PaymentAPI" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Payment Gateway&#xa;Stripe / PayPal" id="rhjx_dGbegwnGX5aLIfb-6">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="87" width="152" x="35" y="609" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Video Conferencing API&#xa;Zoom / Google Meet" mermaidId="n:VideoAPI" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Video Conferencing API&#xa;Zoom / Google Meet" id="rhjx_dGbegwnGX5aLIfb-7">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="108" width="152" x="270" y="609" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Notification Service&#xa;SendGrid / SMTP" mermaidId="n:EmailAPI" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;" mermaidBaseValue="Notification Service&#xa;SendGrid / SMTP" id="rhjx_dGbegwnGX5aLIfb-8">
+          <mxCell parent="rhjx_dGbegwnGX5aLIfb-1" style="html=1;whiteSpace=wrap;strokeWidth=2;fillColor=#e2e3e5;strokeColor=#383d41;fontColor=#383d41;fontFamily=Recursive;fontSize=14;shadow=1;shadowColor=#000000;shadowOffsetX=4;shadowOffsetY=4;shadowBlur=0;shadowOpacity=6;labelWidth=120;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" vertex="1">
+            <mxGeometry height="87" width="152" x="504" y="609" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Searches, books lessons,&#xa;pays, leaves reviews" mermaidId="e:Student-&gt;System#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.28;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Searches, books lessons,&#xa;pays, leaves reviews" id="rhjx_dGbegwnGX5aLIfb-9">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.28;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="122" y="316" />
+                <mxPoint x="313" y="316" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Manages profile &amp; schedule,&#xa;teaches, receives payouts" mermaidId="e:Tutor-&gt;System#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Manages profile &amp; schedule,&#xa;teaches, receives payouts" id="rhjx_dGbegwnGX5aLIfb-10">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Verifies documents,&#xa;moderates platform" mermaidId="e:Admin-&gt;System#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.71;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Verifies documents,&#xa;moderates platform" id="rhjx_dGbegwnGX5aLIfb-11">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.71;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-5">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="570" y="316" />
+                <mxPoint x="379" y="316" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Processes payments &amp; refunds" mermaidId="e:System-&gt;PaymentAPI#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.28;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Processes payments &amp; refunds" id="rhjx_dGbegwnGX5aLIfb-12">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.28;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-6">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="313" y="528" />
+                <mxPoint x="111" y="528" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Generates online meeting links" mermaidId="e:System-&gt;VideoAPI#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Generates online meeting links" id="rhjx_dGbegwnGX5aLIfb-13">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-7">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Sends Email/SMS notifications" mermaidId="e:System-&gt;EmailAPI#0" mermaidBaseStyle="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=16;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;" mermaidBaseValue="Sends Email/SMS notifications" id="rhjx_dGbegwnGX5aLIfb-14">
+          <mxCell edge="1" parent="rhjx_dGbegwnGX5aLIfb-1" source="rhjx_dGbegwnGX5aLIfb-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;curved=0;startArrow=none;endArrow=block;endSize=8;jumpStyle=arc;jumpSize=12;strokeColor=#000000;html=1;fontSize=14;labelBackgroundColor=#cccccc;fontFamily=Recursive;fontColor=#28253D;exitX=0.71;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;targetPerimeterSpacing=4;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRecursive;" target="rhjx_dGbegwnGX5aLIfb-8">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="379" y="528" />
+                <mxPoint x="580" y="528" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
