@@ -1,6 +1,10 @@
 # 2. Evidence of relevance
 
+DIP-5-interactive-ui
 Published research and competitor observation motivate a prototype but do not establish local unmet demand. To establish this, 3 real discussions with user representatives (students acting as learners and tutors) were conducted. No participant quotes or commitments are invented; findings are separated from initial assumptions.
+=======
+Published research and competitor observation motivate a prototype but do not establish local unmet demand. The required 3–5 real discussions or a substantive client agreement have not been supplied, so this component remains incomplete. No participant quotes or commitments are invented.
+main
 
 ## Desk evidence
 
@@ -23,6 +27,7 @@ Tutors: How do students find you? How do you update availability and prevent con
 
 ## Evidence register
 
+DIP-5-interactive-ui
 Data was collected via asynchronous voice messages (Telegram) based on the structured guide. Total: 3 participants (university students), 9 voice messages recorded and transcribed.
 
 | Participant | Role | Date / method | Consent and note | Finding / affected requirement |
@@ -30,11 +35,17 @@ Data was collected via asynchronous voice messages (Telegram) based on the struc
 | P1 (Aruzhan) | Student (UNT/Exam prep search) | Oct 2026 / Async Voice Messages | Consented. See `docs/evidence/interview-1.md` | Search takes 3-5 days. Impossible to verify real qualifications informally; wants 2-click booking and verified diplomas. Drives FR-04, FR-07, FR-09 |
 | P2 (Nurlan) | Student (Language prep search) | Oct 2026 / Async Voice Messages | Consented. See `docs/evidence/interview-2.md` | Hard to compare prices; scheduling via chats takes days; last-minute cancellations ruin schedules. Drives FR-07, FR-08, FR-11 |
 | P3 (Daniyar) | Student (Part-time Tutor) | Oct 2026 / Async Voice Messages | Consented. See `docs/evidence/interview-3.md` | Wastes 3-5 hours/week on administrative DMs; loses income due to late unpenalized cancellations; willing to pay commission for automated scheduling. Drives FR-06, FR-08, FR-10, FR-16 |
+=======
+| Participant | Role | Date / method | Consent and note | Finding / affected requirement |
+|---|---|---|---|---|
+| No completed discussion supplied | — | — | No evidence file yet | No participant finding claimed |
+main
 
 Distinguish statement, observation and interpretation. These discussions provide qualitative discovery, not a representative market survey.
 
 ## Assumption register
 
+DIP-5-interactive-ui
 | ID | Assumption to test | Evidence Collected | Requirement | Status |
 |---|---|---|---|---|
 | A1 | Qualification provenance influences tutor choice | P1 stated inability to verify diplomas is the biggest risk in informal searches. | FR-04, FR-06, FR-12 | **[Verified]** |
@@ -42,5 +53,14 @@ Distinguish statement, observation and interpretation. These discussions provide
 | A3 | Users accept paying after tutor acceptance | P2 confirmed willingness to pay online via platform if refunds/rescheduling are secure. | FR-09–11 | **[Verified]** |
 | A4 | Tutors will maintain slots and handle requests | P3 confirmed they currently manually manage a calendar and would prefer an automated system. | FR-08–10 | **[Verified]** |
 | A5 | Integrated booking adds value despite existing services | P1, P2, P3 all confirmed current informal tools (Instagram, WhatsApp, Kaspi) fail at dispute resolution and schedule sync. | Scope and baseline | **[Verified]** |
+=======
+| ID | Assumption to test | Evidence needed | Requirement |
+|---|---|---|---|
+| A1 | Qualification provenance influences tutor choice | What participants checked in their last search | FR-04, FR-06, FR-12 |
+| A2 | Comparing price/availability reduces contacts | Reconstructed search and observed prototype task | FR-05, FR-07, FR-08 |
+| A3 | Users accept paying after tutor acceptance | Actual payment practice and checkout reactions | FR-09–11 |
+| A4 | Tutors will maintain slots and handle requests | Current diary workflow and maintenance cost | FR-08–10 |
+| A5 | Integrated booking adds value despite existing services | Specific unmet need and disconfirming answers | Scope and baseline |
+main
 
 If evidence contradicts an assumption, revise priority or remove the feature and record why. E denotes desk evidence; A denotes an unverified local assumption.
